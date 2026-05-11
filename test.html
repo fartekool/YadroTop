@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Yadro Monitoring TS</title>
+    <style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+    th {
+        background-color: #f4f4f4;
+        position: sticky;
+        top: 0;
+    }
+    tr:nth-child(even) { background-color: #f9f9f9; }
+</style>
+</head>
+<body>
+    <h1>System Monitor (TS)</h1>
+    <div id="status" style="color: gray;">Статус: Подключение...</div>
+    <div id="output">Ожидание...</div>
+
+    <table id="process-table">
+    <thead>
+        <tr>
+            <th>PID</th>
+            <th>Name</th>
+            <th>Memory (MB)</th>
+            <th>Status</th>
+            <th>Threads</th>
+        </tr>
+    </thead>
+    <tbody id="process-list"></tbody>
+    </table>    
+
+    <script src="script.js"></script>
+</body>
+</html>
