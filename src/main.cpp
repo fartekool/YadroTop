@@ -18,7 +18,6 @@ int main() {
     crow::SimpleApp app;
 
     Monitor monitor;
-
     CROW_ROUTE(app, "/ws")
         .websocket(&app)
         .onopen([&](crow::websocket::connection& conn) {

@@ -173,6 +173,16 @@ void Monitor::updateProcesses(int64_t totalDelta) {
         nextProcesses.push_back({pid, name, memMb, status, threads, processCpuUsage, userName});
     }
     prevProcessesTicks_ = std::move(currProcessesTicks);
-    std::sort(nextProcesses.begin(), nextProcesses.end(), [](const ProcessInfo& a, const ProcessInfo& b){return a.cpuUsage > b.cpuUsage;});
+    std::sort(nextProcesses.begin(), nextProcesses.end(), [this](const ProcessInfo& a, const ProcessInfo& b){
+        switch (sortField_) {
+            case SortField::CPU: return a.cpuUsage > b.cpuUsage;
+            case SortField::MEM: return a.mem > b.mem;
+            case SortField::PID: return a.pid < b.pid;
+            case SortField::NAME: return a.name < b.name;
+            case SortField::USER: return a.user < b.user;
+            case SortField::THREADS: return a.threads > b.threads;
+            default: return a.mem > b.mem;
+        }
+    });
     processes_ = std::move(nextProcesses);
 }
