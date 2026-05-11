@@ -1,4 +1,6 @@
 #pragma once
+#include <pwd.h>
+#include <sys/stat.h>
 #include <string>
 #include <vector>
 #include <map>
@@ -10,6 +12,7 @@ struct ProcessInfo {
     char status;
     int threads;
     double cpuUsage;
+    std::string user;
 };
 
 struct Memory {
@@ -33,6 +36,7 @@ class Monitor {
     double cpuUsage_ = 0.0;
     std::vector<ProcessInfo> processes_;
     std::map<int, int64_t> prevProcessesTicks_;
+    std::map<uid_t, std::string> userCache_;
 
     void updateProcesses(int64_t totalDelta);
 public:

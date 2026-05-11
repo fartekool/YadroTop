@@ -94,6 +94,20 @@ void Monitor::updateProcesses(int64_t totalDelta) {
 
         int pid = std::stoi(dirname);
         
+        struct stat st;
+        std::string userName;
+        if (stat(entry.path().c_str(), &st) == 0) {
+            uid_t uid = st.st_uid;
+
+            if (userCache_.count(uid)) {
+                userName = userCache_[uid];
+            } else {
+                struct passwd *pw = getpwuid(uid);
+                userName = pw->pw_name;
+                userCache_[uid] = userName;
+            }
+        }
+
         std::string commPath = "/proc/" + dirname + "/comm";
         std::ifstream commFile(commPath);
         std::string name;
@@ -156,7 +170,7 @@ void Monitor::updateProcesses(int64_t totalDelta) {
         } else {
             continue;
         }
-        nextProcesses.push_back({pid, name, memMb, status, threads, processCpuUsage});
+        nextProcesses.push_back({pid, name, memMb, status, threads, processCpuUsage, userName});
     }
     prevProcessesTicks_ = std::move(currProcessesTicks);
     std::sort(nextProcesses.begin(), nextProcesses.end(), [](const ProcessInfo& a, const ProcessInfo& b){return a.cpuUsage > b.cpuUsage;});

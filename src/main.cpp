@@ -52,6 +52,7 @@ int main() {
                 p_json["status"] = std::string(1, p.status);
                 p_json["threads"] = p.threads;
                 p_json["proc_cpu"] = p.cpuUsage;
+                p_json["user"] = p.user;
                 response["processes"].push_back(p_json);
             }
 
