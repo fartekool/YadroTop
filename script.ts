@@ -16,8 +16,10 @@ interface SystemMetrics {
     processes: ProcessInfo[];
 }
 
+let socket: WebSocket;
+
 function connect(): void {
-    const socket = new WebSocket('ws://localhost:8080/ws');
+    socket = new WebSocket('ws://localhost:8080/ws');
     const statusEl = document.getElementById('status') as HTMLElement;
     const outputEl = document.getElementById('output') as HTMLElement;
     const processListEl = document.getElementById('process-list') as HTMLElement;
@@ -64,5 +66,11 @@ function connect(): void {
         socket.close();
     };
 }
+
+(window as any).changeSort = (type: string) => {
+    if (socket && socket.readyState === WebSocket.OPEN) {
+        socket.send(`sort_${type}`);
+    }
+};
 
 connect();

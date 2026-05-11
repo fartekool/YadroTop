@@ -5,6 +5,8 @@
 #include <vector>
 #include <map>
 
+enum class SortField { PID, NAME, USER, CPU, MEM, THREADS };
+
 struct ProcessInfo {
     int pid;
     std::string name;
@@ -37,6 +39,7 @@ class Monitor {
     std::vector<ProcessInfo> processes_;
     std::map<int, int64_t> prevProcessesTicks_;
     std::map<uid_t, std::string> userCache_;
+    SortField sortField_ = SortField::CPU;
 
     void updateProcesses(int64_t totalDelta);
 public:
@@ -44,4 +47,5 @@ public:
     double getCpuUsage() const {return cpuUsage_;}
     const Memory& getMemory() const {return mem_;}
     const std::vector<ProcessInfo>& getProcesses() const { return processes_; }
+    void setSortField(SortField field) {sortField_ = field;}
 };

@@ -1,5 +1,6 @@
+var socket;
 function connect() {
-    var socket = new WebSocket('ws://localhost:8080/ws');
+    socket = new WebSocket('ws://localhost:8080/ws');
     var statusEl = document.getElementById('status');
     var outputEl = document.getElementById('output');
     var processListEl = document.getElementById('process-list');
@@ -24,4 +25,9 @@ function connect() {
         socket.close();
     };
 }
+window.changeSort = function (type) {
+    if (socket && socket.readyState === WebSocket.OPEN) {
+        socket.send("sort_".concat(type));
+    }
+};
 connect();

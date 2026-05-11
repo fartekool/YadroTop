@@ -29,12 +29,12 @@
     <table id="process-table">
     <thead>
         <tr>
-            <th>PID</th>
-            <th>Name</th>
-            <th>User</th>
-            <th>CPU Usage (%)</th>
-            <th>Memory (MB)</th>
-            <th>Threads</th>
+            <th onclick="changeSort('pid')" style="cursor:pointer">PID</th>
+            <th onclick="changeSort('name')" style="cursor:pointer">Name</th>
+            <th onclick="changeSort('user')" style="cursor:pointer">User</th>
+            <th onclick="changeSort('cpu')" style="cursor:pointer">CPU %</th>
+            <th onclick="changeSort('mem')" style="cursor:pointer">Memory</th>
+            <th onclick="changeSort('threads')" style="cursor:pointer">Threads</th>
             <th>Status</th>
         </tr>
     </thead>

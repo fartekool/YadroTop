@@ -29,6 +29,16 @@ int main() {
             CROW_LOG_INFO << "Соединение закрыто: " << reason;
             std::lock_guard<std::mutex> lock(conn_mutex);
             active_connections.erase(&conn);
+        })
+        .onmessage([&](crow::websocket::connection&, const std::string& data, bool is_binary){
+            if (!is_binary) {
+                if (data == "sort_cpu") monitor.setSortField(SortField::CPU);
+                else if (data == "sort_mem") monitor.setSortField(SortField::MEM);
+                else if (data == "sort_pid") monitor.setSortField(SortField::PID);
+                else if (data == "sort_name") monitor.setSortField(SortField::NAME);
+                else if (data == "sort_user") monitor.setSortField(SortField::USER);
+                else if (data == "sort_threads") monitor.setSortField(SortField::THREADS);
+            }
         });
 
     std::thread([&]() {
