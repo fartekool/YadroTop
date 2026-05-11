@@ -4,6 +4,7 @@ interface ProcessInfo {
     mem: number;
     status: string;
     threads: number;
+    proc_cpu: number;
 }
 
 interface SystemMetrics {
@@ -45,6 +46,7 @@ function connect(): void {
                     <td>${proc.mem.toFixed(2)} MB</td>
                     <td>${proc.status}</td>
                     <td>${proc.threads}</td>
+                    <td>${proc.proc_cpu.toFixed(2)} %</td>
                 </tr>
             `).join('');
         }

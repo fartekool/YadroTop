@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include <vector>
-
+#include <map>
 
 struct ProcessInfo {
     int pid;
@@ -9,6 +9,7 @@ struct ProcessInfo {
     double mem;
     char status;
     int threads;
+    double cpuUsage;
 };
 
 struct Memory {
@@ -31,8 +32,9 @@ class Monitor {
     Cpu prevCpu_;
     double cpuUsage_ = 0.0;
     std::vector<ProcessInfo> processes_;
+    std::map<int, int64_t> prevProcessesTicks_;
 
-    void updateProcesses();
+    void updateProcesses(int64_t totalDelta);
 public:
     void update();
     double getCpuUsage() const {return cpuUsage_;}
